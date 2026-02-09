@@ -22,6 +22,12 @@ password: {passworddelhub}
 
 5. luego accedes al aap por la web, y miras en execution environments del hub Y REVISAS que este el nuevo ee subido
 
+6. mapear el ee del hub al controller, ir al hub --> en los 3 puntos --> use in controller --> llenar campos
+
+7. revisar entorno de ejecucion ya debe estar en el controller.
+
+8. probar win ping con entorno de ejecuciÓn nuevo 
+
 
 
 
