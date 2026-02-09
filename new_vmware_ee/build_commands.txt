@@ -1,0 +1,3 @@
+podman login registry.redhat.io
+ingresar credenciales de redhat
+ansible-builder build -t vmware-community-ee-new:v1.0

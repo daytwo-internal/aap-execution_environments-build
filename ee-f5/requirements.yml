@@ -1,0 +1,7 @@
+---
+collections:
+  - name: f5networks.f5_modules
+    version: '1.34.1'
+
+  - name: ansible.netcommon
+    version: '>=2.0.0'

@@ -1,0 +1,4 @@
+rm -rf context/
+vi token.txt ---> copiar el token del console.redhat.com -> ingresar con credenciales de redhat -> connect to hub --> copiar token al archivo token.txt
+export ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN=$(cat token.txt)
+ansible-builder build -v 3 --build-arg ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN -t windows-ee:v1.0

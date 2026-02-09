@@ -1,0 +1,28 @@
+---
+version: 3
+
+images:
+  base_image:
+    name: registry.redhat.io/ubi9:latest
+
+dependencies:
+  galaxy:
+    collections:
+      - name: community.vmware
+
+  python: requirements.txt
+
+  ansible_core:
+    package_pip: ansible-core>=2.15,<2.16
+
+  ansible_runner:
+    package_pip: ansible-runner
+
+#options:
+#  package_manager_path: /usr/bin/microdnf
+
+additional_build_steps:
+  prepend_base:
+    - RUN $PKGMGR install -y python3-pip
+    - RUN $PYCMD -m pip install --upgrade pip setuptools wheel
+
