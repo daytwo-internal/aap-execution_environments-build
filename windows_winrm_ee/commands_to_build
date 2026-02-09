@@ -1,4 +1,27 @@
-rm -rf context/
-vi token.txt ---> copiar el token del console.redhat.com -> ingresar con credenciales de redhat -> connect to hub --> copiar token al archivo token.txt
-export ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN=$(cat token.txt)
-ansible-builder build -v 3 --build-arg ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN -t windows-ee:v1.0
+ssh a nodo controlador bcegansbl01.bce.fin.ec --> nodo controlador
+
+1. mkdir ee-winrm
+2. git clone del repo 
+3. rm -rf context/
+
+4. vi token.txt ---> copiar el token del console.redhat.com -> ingresar con credenciales de redhat -> connect to hub --> copiar token al archivo token.txt
+5. export ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN=$(cat token.txt)
+6. ansible-builder build -v 3 --build-arg ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN -t windows-ee:v1.0
+
+------------------------------------------------
+
+1. podman login bcegansbl02.bce.fin.ec --tls-verify=false
+username:admin 
+password: {passworddelhub} 
+
+2. podman images
+
+3. podman tag localhost/windows-ee:v1.0 bcegansbl02.bce.fin.ec/windows-ee:v1.0
+
+4- podman push bcegansbl02.bce.fin.ec/windows-ee:v1.0 --tls-verify=false
+
+5. luego accedes al aap por la web, y miras en execution environments del hub Y REVISAS que este el nuevo ee subido
+
+
+
+
