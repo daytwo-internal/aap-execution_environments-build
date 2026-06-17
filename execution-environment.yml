@@ -1,0 +1,41 @@
+version: 3
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
+
+dependencies:
+  galaxy:
+    collections:
+      - ansible.netcommon
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_files:
+  # copy arbitary files next to this EE Definition into the build context - we can refer to them later
+  - src: files
+    dest: configs
+
+
+additional_build_steps:
+  prepend_galaxy:
+    - COPY _build/configs/ansible.cfg /etc/ansible/ansible.cfg
+
+### este despues hay q mover cuando tengas un cert valido
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--ignore-certs'
+
+
+additional_build_files:
+  - src: files
+    dest: configs
+
+additional_build_steps:
+  prepend_galaxy:
+    - COPY _build/configs/ansible.cfg /etc/ansible/ansible.cfg
+    - ARG ANSIBLE_GALAXY_SERVER_RH_CERTIFIED_REPO_TOKEN
+  prepend_base:
+    - COPY _build/configs/cert.pem /etc/pki/ca-trust/source/anchors/
+    - RUN update-ca-trust
+
+

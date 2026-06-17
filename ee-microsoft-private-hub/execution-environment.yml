@@ -1,0 +1,43 @@
+version: 3
+
+images:
+  base_image:
+    name: aap.daytwo.cloud/ee-minimal-rhel8:latest
+
+dependencies:
+  python: requirements.txt
+  galaxy: requirements.yml
+  system: bindep.txt
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_files:
+  - src: files/ansible.cfg
+    dest: configs
+  - src: files/hub-ca.crt
+    dest: configs
+  # uncomment if custom RPM repositories are required
+  #- src: files/custom.repo
+  #  dest: configs
+
+
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: "--ignore-certs"
+
+additional_build_steps:
+  prepend_base:
+    # copy a custom pip.conf to override the location of the PyPI content
+    #- ADD _build/configs/pip.conf /etc/pip.conf
+    # remove the default UBI repository definition
+    #- RUN rm -f /etc/yum.repos.d/ubi.repo
+    # copy the hub CA certificate and update the trust store
+    - ADD _build/configs/hub-ca.crt /etc/pki/ca-trust/source/anchors
+    - RUN update-ca-trust
+    # if needed, uncomment to add a custom RPM repository configuration
+    #- ADD _build/configs/custom.repo /etc/yum.repos.d/custom.repo
+
+  prepend_galaxy:
+    - ADD _build/configs/ansible.cfg ~/.ansible.cfg
+
+

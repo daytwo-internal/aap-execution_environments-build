@@ -1,0 +1,19 @@
+sudo dnf install python3-pip
+sudo pip3 install ansible-builder
+
+
+git clone  https://github.com/redhat-cop/cloud.vmware_ops.git
+cd cloud.vmware_ops/execution-environment
+rm -rf ./context
+
+ansible-builder build -t vmwareops-ee:v1.0
+
+podman login srvuioprans05.bscluster.int:8444 --tls-verify=false
+username:admin 
+password: {passworddelhub} 
+
+podman tag localhost/vmwareops-ee:v1.0 srvuioprans05.bscluster.int:8444/vmwareops-ee:v1.0
+
+podman push srvuioprans05.bscluster.int:8444/vmwareops-ee:v1.0 --tls-verify=false
+
+---luego ver como unir la imagen esta q se sube al hub, unirle al controller
